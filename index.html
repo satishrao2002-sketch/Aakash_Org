@@ -118,19 +118,15 @@ td.n input.wide{width:16ch}
     <h2>Reporting structure</h2>
     <div class="chart">
       <svg viewBox="0 0 1180 640" role="img" aria-label="Aakash GCC organisation chart">
-        <!-- connectors: business -->
         <path class="ln lbiz" d="M380 186 V250"/>
         <path class="ln lbiz" d="M380 306 V370"/>
         <path class="ln lbiz" d="M380 426 V462 M240 462 H520 M240 462 V500 M380 462 V500 M520 462 V500"/>
         <path class="ln lbiz" d="M285 158 H200 V214"/>
-        <!-- academic -->
         <path class="ln lacad" d="M880 76 V130"/>
         <path class="ln lacad" d="M880 186 V222 H780 V250"/>
         <path class="ln lacad" d="M780 306 V500"/>
-        <!-- ops -->
         <path class="ln lops" d="M880 222 H1060 V250"/>
         <path class="ln lops" d="M1060 306 V370"/>
-        <!-- dotted -->
         <path class="ldot" d="M785 158 H475"/>
         <text class="tag" x="540" y="150">visibility on operations</text>
         <path class="ldot" d="M690 528 H600 V398 H475"/>
@@ -140,23 +136,19 @@ td.n input.wide{width:16ch}
         <path class="ldot" d="M1060 426 V448 H540 V412 H475"/>
         <text class="tag" x="700" y="442">centre operations support</text>
 
-        <!-- AESL India -->
         <rect class="box acad facad" x="770" y="20" width="220" height="56" rx="8"/>
         <text class="k" x="784" y="38">AESL INDIA · GURUGRAM</text>
         <text class="t" x="784" y="60">Academic Head (HQ)</text>
 
-        <!-- Business Head -->
         <rect class="box biz fbiz" x="285" y="130" width="190" height="56" rx="8"/>
         <text class="k" x="299" y="148">DUBAI HQ</text>
         <text class="t" x="299" y="170">Business Head – GCC</text>
         <text class="s" x="299" y="200">Satish Rao</text>
 
-        <!-- Gulf Academic Head -->
         <rect class="box acad facad" x="785" y="130" width="190" height="56" rx="8"/>
         <text class="k" x="799" y="148">DUBAI HQ</text>
         <text class="t" x="799" y="170">Gulf Academic Head</text>
 
-        <!-- HQ support group -->
         <rect class="box neutral" x="20" y="214" width="200" height="274" rx="10" style="fill:transparent;stroke-dasharray:0"/>
         <text class="k" x="34" y="236">HQ SUPPORT → BUSINESS HEAD</text>
         <rect class="box biz" x="34" y="248" width="172" height="48" rx="6"/>
@@ -168,17 +160,14 @@ td.n input.wide{width:16ch}
         <rect class="box biz" x="34" y="416" width="172" height="56" rx="6"/>
         <text class="t" x="46" y="436">Finance Controller</text><text class="s" x="46" y="453">Dotted to AESL Finance,</text><text class="s" x="46" y="466">India</text>
 
-        <!-- Country Head -->
         <rect class="box biz" x="285" y="250" width="190" height="56" rx="8"/>
         <text class="k" x="299" y="268">ONE PER COUNTRY · ×6</text>
         <text class="t" x="299" y="290">Country Head</text>
 
-        <!-- Centre Manager -->
         <rect class="box biz" x="285" y="370" width="190" height="56" rx="8"/>
         <text class="k" x="299" y="388">ONE PER CENTRE</text>
         <text class="t" x="299" y="410">Centre / Branch Manager</text>
 
-        <!-- centre staff -->
         <rect class="box biz" x="185" y="500" width="110" height="56" rx="8"/>
         <text class="k" x="197" y="518">FROM 150+</text><text class="t" x="197" y="540">Counsellors</text>
         <rect class="box biz" x="325" y="500" width="110" height="56" rx="8"/>
@@ -186,17 +175,14 @@ td.n input.wide{width:16ch}
         <rect class="box biz" x="465" y="500" width="110" height="56" rx="8"/>
         <text class="k" x="477" y="518">FROM 150+</text><text class="t" x="477" y="540">BD Executive</text>
 
-        <!-- Country Academic Head -->
         <rect class="box acad" x="685" y="250" width="190" height="56" rx="8"/>
         <text class="k" x="699" y="268">ONE PER COUNTRY · ×6</text>
         <text class="t" x="699" y="290">Country Academic Head</text>
 
-        <!-- Faculty -->
         <rect class="box acad" x="690" y="500" width="180" height="56" rx="8"/>
         <text class="k" x="702" y="518">SET OF 4 · 210–220 STUDENTS</text>
         <text class="t" x="702" y="540">Faculty</text>
 
-        <!-- Ops -->
         <rect class="box ops fops" x="965" y="250" width="190" height="56" rx="8"/>
         <text class="k" x="979" y="268">ONE FOR THE GULF</text>
         <text class="t" x="979" y="290">Operations Manager</text>
@@ -253,6 +239,7 @@ td.n input.wide{width:16ch}
       </table></div>
       <div class="side">
         <div class="total"><small>Staff at this centre</small><b id="tot">4</b><small id="totNote">plus faculty</small></div>
+        <div id="status" class="status">Ready</div>
         <ul class="notes" id="notes"></ul>
       </div>
     </div>
@@ -282,7 +269,7 @@ const META={
   sip:{emp:"Aakash entity",notes:["Delivered inside the school timetable.","Admissions and fee collection go through the school; the nearest centre's accounts person reconciles.","The Country Head owns the school relationship."]},
   lp:{emp:"Partner payroll",notes:["Bridge model for about 2 years until Aakash's own entity is formed.","Partner is the legal face: payroll, visas, lease, fee account, VAT and compliance.","Reporting lines stay with Aakash; partner keeps its agreed revenue share."]}
 };
-let data={"own":{"s":{"cm":1,"couns":0,"acc":1,"bd":0,"ops":1,"fac":"4 for 1 centres"},"m":{"cm":1,"couns":1,"acc":1,"bd":0,"ops":1,"fac":"4-6"},"l":{"cm":1,"couns":2,"acc":1,"bd":1,"ops":1,"fac":"7-8"}},"sat":{"s":{"cm":1,"couns":0,"acc":1,"bd":0,"ops":1,"fac":"4 for 1 centre"},"m":{"cm":1,"couns":1,"acc":1,"bd":0,"ops":1,"fac":"4-6"},"l":{"cm":1,"couns":2,"acc":1,"bd":1,"ops":1,"fac":"7-8"}},"sip":{"s":{"coord":1,"ops":1,"fac":"4 for 1 centre"},"m":{"coord":1,"ops":1,"fac":"6"},"l":{"coord":2,"ops":1,"fac":"7-8"}},"lp":{"s":{"cm":1,"couns":0,"acc":1,"bd":0,"ops":1,"fac":"4 for 1 centre"},"m":{"cm":1,"couns":2,"acc":1,"bd":0,"ops":1,"fac":"4-6"},"l":{"cm":1,"couns":1,"acc":1,"bd":1,"ops":1,"fac":"7-8"}}}, draft=null, type="own", tier="s", art=null, canSave=true;
+let data={"own":{"s":{"cm":1,"couns":0,"acc":1,"bd":0,"ops":1,"fac":"4 for 1 centres"},"m":{"cm":1,"couns":1,"acc":1,"bd":0,"ops":1,"fac":"4-6"},"l":{"cm":1,"couns":2,"acc":1,"bd":1,"ops":1,"fac":"7-8"}},"sat":{"s":{"cm":1,"couns":0,"acc":1,"bd":0,"ops":1,"fac":"4 for 1 centre"},"m":{"cm":1,"couns":1,"acc":1,"bd":0,"ops":1,"fac":"4-6"},"l":{"cm":1,"couns":2,"acc":1,"bd":1,"ops":1,"fac":"7-8"}},"sip":{"s":{"coord":1,"ops":1,"fac":"4 for 1 centre"},"m":{"coord":1,"ops":1,"fac":"6"},"l":{"coord":2,"ops":1,"fac":"7-8"}},"lp":{"s":{"cm":1,"couns":0,"acc":1,"bd":0,"ops":1,"fac":"4 for 1 centre"},"m":{"cm":1,"couns":2,"acc":1,"bd":0,"ops":1,"fac":"4-6"},"l":{"cm":1,"couns":1,"acc":1,"bd":1,"ops":1,"fac":"7-8"}}}, draft=null, type="own", tier="s";
 const $=id=>document.getElementById(id);
 const FACNOTE="1 set = 4 faculty, planned for 210–220 students (about 270 at full capacity)";
 const STAGE={s:"Done by the Centre Manager below 150 students",m:"Temporary staff travelling from India",l:"Dedicated local hire, if the country needs it"};
@@ -290,7 +277,7 @@ const cur=()=>(draft||data)[type][tier];
 function withDefaults(){const v=cur();for(const k in DEFAULTS[type][tier]) if(v[k]===undefined) v[k]=DEFAULTS[type][tier][k];return v;}
 
 function rowsFor(){
-  const v=cur(), emp=META[type].emp;
+  const emp=META[type].emp;
   if(type==="sip") return [
     ["Programme Coordinator","Nearest "+CM+" · "+CH,"coord","biz",emp],
     ["Operations Executive","Operations Manager · dotted to Programme Coordinator","ops","ops",emp],
@@ -300,9 +287,11 @@ function rowsFor(){
     ["Counsellors",CM,"couns","biz",emp,STAGE[tier]],
     ["Accounts",CM+" · dotted to Finance Controller","acc","biz",emp],
     ["BD Executive",CM,"bd","biz",emp,STAGE[tier]],
-    ["Operations Executive","Operations Manager · dotted to "+CM,"ops","ops",emp],["Faculty",CAH+" · dotted to "+CM,"fac","acad",emp,FACNOTE]];
+    ["Operations Executive","Operations Manager · dotted to "+CM,"ops","ops",emp],
+    ["Faculty",CAH+" · dotted to "+CM,"fac","acad",emp,FACNOTE]
+  ];
 }
-function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function esc(s){return String(s).replace(/[&<>\"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]))}
 function render(){
   const v=withDefaults(), r=rowsFor();
   $("rows").innerHTML=r.map(x=>{
@@ -314,7 +303,7 @@ function render(){
       : esc(val);
     return `<tr><td><span class="pill ${x[3]}">${label}</span><br>${x[0]}${x[5]?`<span class="rnote">${x[5]}</span>`:""}</td><td>${x[1]}</td><td class="n">${cell}</td><td>${x[4]}</td></tr>`;
   }).join("");
-  const staff=r.filter(x=>x[2]!=="fac").reduce((s,x)=>s+(Number(v[x[2]])||0),0);
+  const staff=r.filter(x=>x[2]!="fac").reduce((s,x)=>s+(Number(v[x[2]])||0),0);
   $("tot").textContent=staff;
   $("totNote").textContent="non-faculty, plus "+v.fac+" faculty";
   $("notes").innerHTML=META[type].notes.map(n=>`<li>${n}</li>`).join("");
@@ -324,14 +313,14 @@ document.addEventListener("input",e=>{
   const k=e.target.dataset&&e.target.dataset.k; if(!k||!draft) return;
   draft[type][tier][k]= k==="fac" ? e.target.value : Math.max(0,parseInt(e.target.value,10)||0);
   const v=cur(), r=rowsFor();
-  $("tot").textContent=r.filter(x=>x[2]!=="fac").reduce((s,x)=>s+(Number(v[x[2]])||0),0);
+  $("tot").textContent=r.filter(x=>x[2]!="fac").reduce((s,x)=>s+(Number(v[x[2]])||0),0);
   $("totNote").textContent="non-faculty, plus "+v.fac+" faculty";
-  $("status").textContent="Unsaved changes";
+  const statusEl=$("status");
+  if (statusEl) statusEl.textContent="Unsaved changes";
 });
 function bind(id,set){document.querySelectorAll("#"+id+" button").forEach(b=>b.addEventListener("click",()=>{
   document.querySelectorAll("#"+id+" button").forEach(x=>x.setAttribute("aria-pressed",x===b));set(b.dataset.v);render();}));}
 bind("typeSeg",v=>type=v);bind("tierSeg",v=>tier=v);
-
 render();
 </script>
 
