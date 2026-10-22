@@ -1,696 +1,339 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Aakash GCC Organisation</title>
-    <style>
-      :root {
-        --bg: #f3f6f7;
-        --surface: #ffffff;
-        --fg: #16212a;
-        --muted: #5a6874;
-        --rule: #cdd6dc;
-        --biz: #0b6b6b;
-        --acad: #3a48b0;
-        --ops: #a8621a;
-        --soft-biz: #e2f0ef;
-        --soft-acad: #e6e8f7;
-        --soft-ops: #f6ebdd;
-      }
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{box-sizing:border-box}body{margin:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Aakash GCC Organisation</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: one wide reporting chart (three colour-coded lines), then a centre explorer by type × size tier */
+:root{
+  --bg:#F3F6F7; --surface:#FFFFFF; --fg:#16212A; --muted:#5A6874; --rule:#CDD6DC;
+  --biz:#0B6B6B; --acad:#3A48B0; --ops:#A8621A; --soft-biz:#E2F0EF; --soft-acad:#E6E8F7; --soft-ops:#F6EBDD;
+  --display:"IBM Plex Sans Condensed","Arial Narrow",Arial,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0F161C; --surface:#18222A; --fg:#E4EAEE; --muted:#93A2AE; --rule:#2E3B45;
+  --biz:#4FC0BC; --acad:#8E9BF2; --ops:#E3A15A; --soft-biz:#163432; --soft-acad:#1E2347; --soft-ops:#3A2A17; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F161C; --surface:#18222A; --fg:#E4EAEE; --muted:#93A2AE; --rule:#2E3B45;
+  --biz:#4FC0BC; --acad:#8E9BF2; --ops:#E3A15A; --soft-biz:#163432; --soft-acad:#1E2347; --soft-ops:#3A2A17; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 56px}
+.wrap{max-width:1180px;margin:0 auto;display:grid;gap:40px}
+h1,h2{font-family:var(--display);font-weight:700;text-wrap:balance;margin:0;letter-spacing:-.01em}
+h1{font-size:clamp(28px,4vw,40px);line-height:1.1}
+h2{font-size:22px}
+.eyebrow{font-family:var(--display);font-weight:600;text-transform:uppercase;letter-spacing:.08em;font-size:12px;color:var(--muted)}
+header{display:grid;gap:10px}
+header p{margin:0;max-width:68ch;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.sw{width:22px;height:0;border-top:3px solid}
+.sw.dot{border-top:2px dashed var(--muted)}
+.chart{overflow-x:auto;background:var(--surface);border:1px solid var(--rule);border-radius:10px}
+.chart svg{display:block;min-width:1040px;width:100%;height:auto}
+svg .box{fill:var(--surface);stroke-width:1.6}
+svg .biz{stroke:var(--biz)} svg .acad{stroke:var(--acad)} svg .ops{stroke:var(--ops)} svg .neutral{stroke:var(--rule)}
+svg .fbiz{fill:var(--soft-biz)} svg .facad{fill:var(--soft-acad)} svg .fops{fill:var(--soft-ops)}
+svg .t{font-family:var(--display);font-weight:600;font-size:14px;fill:var(--fg)}
+svg .s{font-family:var(--body);font-size:11.5px;fill:var(--muted)}
+svg .k{font-family:var(--display);font-weight:600;font-size:10.5px;letter-spacing:.08em;fill:var(--muted)}
+svg .ln{fill:none;stroke-width:1.8}
+svg .lbiz{stroke:var(--biz)} svg .lacad{stroke:var(--acad)} svg .lops{stroke:var(--ops)}
+svg .ldot{stroke:var(--muted);stroke-dasharray:5 5;fill:none;stroke-width:1.4}
+svg .tag{font-family:var(--body);font-size:10.5px;fill:var(--muted);font-style:italic}
 
-      * { box-sizing: border-box; }
-      html, body { margin: 0; padding: 0; }
-      body {
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        background: var(--bg);
-        color: var(--fg);
-        line-height: 1.55;
-      }
+.section{display:grid;gap:16px}
+.section>p{margin:0;max-width:68ch;color:var(--muted)}
+.controls{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:end}
+.ctl{display:grid;gap:6px}
+.seg{display:flex;flex-wrap:wrap;border:1px solid var(--rule);border-radius:8px;overflow:hidden;background:var(--surface)}
+.seg button{font:500 14px var(--body);color:var(--fg);background:transparent;border:0;padding:8px 14px;cursor:pointer;border-right:1px solid var(--rule)}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+.seg button:focus-visible{outline:2px solid var(--acad);outline-offset:-2px}
+.panel{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px;align-items:start}
+@media (max-width:820px){.panel{grid-template-columns:minmax(0,1fr)}}
+.tblwrap{overflow-x:auto;background:var(--surface);border:1px solid var(--rule);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:14px}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-family:var(--display);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.pill{display:inline-block;font-size:11.5px;font-weight:500;padding:2px 8px;border-radius:99px;white-space:nowrap}
+.pill.biz{background:var(--soft-biz);color:var(--biz)} .pill.acad{background:var(--soft-acad);color:var(--acad)}
+.pill.ops{background:var(--soft-ops);color:var(--ops)}
+.pill.prop{background:var(--soft-ops);color:var(--ops)}
+.side{display:grid;gap:14px}
+.total{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:16px;display:grid;gap:4px}
+.total b{font-family:var(--mono);font-size:30px;font-weight:500;line-height:1.1}
+.total small{color:var(--muted)}
+.notes{margin:0;padding-left:18px;display:grid;gap:8px;font-size:14px}
+.country{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.ccard{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:14px 16px;display:grid;gap:4px}
+.ccard h3{margin:0;font:600 16px var(--display)}
+.ccard p{margin:0;font-size:13.5px;color:var(--muted)}
+.editbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{font:500 14px var(--body);padding:8px 14px;border-radius:8px;border:1px solid var(--rule);background:var(--surface);color:var(--fg);cursor:pointer}
+.btn.primary{background:var(--biz);border-color:var(--biz);color:var(--surface)}
+.btn:focus-visible{outline:2px solid var(--acad);outline-offset:2px}
+.btn:disabled{opacity:.55;cursor:default}
+.status{font-size:13.5px;color:var(--muted)}
+td.n input{font:500 14px var(--mono);width:9ch;padding:4px 6px;border:1px solid var(--acad);border-radius:6px;background:var(--bg);color:var(--fg)}
+td.n input.wide{width:16ch}
+.editing .tblwrap{border-color:var(--acad)}
+.stages{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.stage{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:16px;display:grid;gap:8px;align-content:start}
+.stage .range{font-family:var(--mono);font-size:13px;color:var(--biz)}
+.stage h3{margin:0;font:600 17px var(--display)}
+.stage p{margin:0;font-size:14px}
+.cnote{background:var(--soft-biz);border-radius:10px;padding:12px 16px;font-size:14px;max-width:none}
+.cnote b{color:var(--biz)}
+.rnote{display:block;font-size:12.5px;color:var(--muted);margin-top:2px}
+.open{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:16px 20px}
+.open ol{margin:8px 0 0;padding-left:20px;display:grid;gap:8px;font-size:14px;max-width:80ch}
+</style>
 
-      .wrap {
-        max-width: 1180px;
-        margin: 0 auto;
-        padding: 28px 16px 56px;
-        display: grid;
-        gap: 32px;
-      }
-
-      .eyebrow {
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: var(--muted);
-      }
-
-      h1, h2, h3 {
-        margin: 0;
-        letter-spacing: -0.01em;
-      }
-
-      h1 {
-        font-size: clamp(28px, 4vw, 40px);
-        line-height: 1.1;
-      }
-
-      h2 {
-        font-size: 22px;
-      }
-
-      header, .section, .open {
-        display: grid;
-        gap: 16px;
-      }
-
-      header p, .section > p, .stage p, .ccard p, .open li {
-        margin: 0;
-        color: var(--muted);
-      }
-
-      .legend {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px 16px;
-        color: var(--muted);
-        font-size: 13px;
-      }
-
-      .legend span {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .sw {
-        width: 22px;
-        height: 0;
-        border-top: 3px solid var(--fg);
-        display: inline-block;
-      }
-      .sw.biz { border-color: var(--biz); }
-      .sw.acad { border-color: var(--acad); }
-      .sw.ops { border-color: var(--ops); }
-      .sw.dot {
-        border-top: 2px dashed var(--muted);
-      }
-
-      .chart {
-        background: var(--surface);
-        border: 1px solid var(--rule);
-        border-radius: 10px;
-        overflow: hidden;
-      }
-
-      .org-grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(180px, 1fr));
-        gap: 12px;
-        padding: 18px;
-      }
-
-      .box {
-        border-radius: 10px;
-        padding: 14px 12px;
-        border: 1px solid var(--rule);
-        background: var(--surface);
-        display: grid;
-        gap: 4px;
-      }
-      .box.biz { background: var(--soft-biz); border-color: var(--biz); }
-      .box.acad { background: var(--soft-acad); border-color: var(--acad); }
-      .box.ops { background: var(--soft-ops); border-color: var(--ops); }
-      .box.neutral { background: transparent; }
-
-      .box .tag {
-        font-size: 11px;
-        letter-spacing: 0.08em;
-        font-weight: 700;
-        text-transform: uppercase;
-        color: var(--muted);
-      }
-
-      .box h3 {
-        font-size: 17px;
-      }
-
-      .box p {
-        margin: 0;
-        font-size: 13px;
-        color: var(--muted);
-      }
-
-      .country, .stages {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 12px;
-      }
-
-      .ccard, .stage {
-        background: var(--surface);
-        border: 1px solid var(--rule);
-        border-radius: 10px;
-        padding: 16px;
-        display: grid;
-        gap: 8px;
-      }
-
-      .pill {
-        display: inline-block;
-        font-size: 11px;
-        font-weight: 700;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-        padding: 3px 8px;
-        border-radius: 999px;
-        width: fit-content;
-      }
-      .pill.biz { background: var(--soft-biz); color: var(--biz); }
-      .pill.acad { background: var(--soft-acad); color: var(--acad); }
-      .pill.ops { background: var(--soft-ops); color: var(--ops); }
-
-      .stage .range {
-        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-        font-size: 13px;
-        color: var(--biz);
-      }
-
-      .controls {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 18px 24px;
-        align-items: end;
-      }
-
-      .ctl {
-        display: grid;
-        gap: 8px;
-      }
-
-      .seg {
-        display: flex;
-        flex-wrap: wrap;
-        background: var(--surface);
-        border: 1px solid var(--rule);
-        border-radius: 8px;
-        overflow: hidden;
-      }
-
-      .seg button {
-        border: none;
-        border-right: 1px solid var(--rule);
-        background: transparent;
-        color: var(--fg);
-        font: inherit;
-        padding: 8px 14px;
-        cursor: pointer;
-      }
-      .seg button:last-child { border-right: none; }
-      .seg button[aria-pressed="true"] {
-        background: var(--fg);
-        color: var(--bg);
-      }
-
-      .panel {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) 300px;
-        gap: 24px;
-        align-items: start;
-      }
-
-      @media (max-width: 820px) {
-        .panel { grid-template-columns: 1fr; }
-      }
-
-      .tblwrap {
-        overflow-x: auto;
-        background: var(--surface);
-        border: 1px solid var(--rule);
-        border-radius: 10px;
-      }
-
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        min-width: 560px;
-      }
-
-      th, td {
-        text-align: left;
-        vertical-align: top;
-        padding: 10px 14px;
-        border-bottom: 1px solid var(--rule);
-      }
-
-      th {
-        font-size: 12px;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-        color: var(--muted);
-      }
-
-      td.n {
-        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-        white-space: nowrap;
-      }
-
-      input {
-        font: inherit;
-        width: 9ch;
-        padding: 4px 6px;
-        border: 1px solid var(--acad);
-        border-radius: 6px;
-        background: var(--bg);
-        color: var(--fg);
-      }
-      input.wide {
-        width: 16ch;
-      }
-
-      .rnote {
-        display: block;
-        margin-top: 3px;
-        font-size: 12.5px;
-        color: var(--muted);
-      }
-
-      .side {
-        display: grid;
-        gap: 14px;
-      }
-
-      .total {
-        background: var(--surface);
-        border: 1px solid var(--rule);
-        border-radius: 10px;
-        padding: 16px;
-        display: grid;
-        gap: 4px;
-      }
-      .total small {
-        color: var(--muted);
-      }
-      .total b {
-        font-size: 32px;
-        font-weight: 600;
-        line-height: 1.1;
-      }
-
-      .status {
-        color: var(--muted);
-        font-size: 13px;
-      }
-
-      .notes {
-        margin: 0;
-        padding-left: 18px;
-        display: grid;
-        gap: 8px;
-      }
-
-      .open {
-        background: var(--surface);
-        border: 1px solid var(--rule);
-        border-radius: 10px;
-        padding: 16px 20px;
-      }
-      .open ol {
-        margin: 0;
-        padding-left: 20px;
-        display: grid;
-        gap: 8px;
-      }
-
-      .cnote {
-        background: var(--soft-biz);
-        border-radius: 10px;
-        padding: 12px 16px;
-      }
-      .cnote b { color: var(--biz); }
-    </style>
-  </head>
-  <body>
-    <div class="wrap">
-      <header>
-        <div class="eyebrow">Aakash Educational Services · GCC Business</div>
-        <h1>Aakash GCC Organisation Structure</h1>
-        <p>One structure for every centre in every Gulf country. Three reporting lines run from each centre: business to the Business Head – GCC, academics to the Academic Head at Gurugram, and operations to the Gulf Operations Manager.</p>
-        <div class="legend">
-          <span><i class="sw biz"></i>Business line</span>
-          <span><i class="sw acad"></i>Academic line</span>
-          <span><i class="sw ops"></i>Operations line</span>
-          <span><i class="sw dot"></i>Dotted line (secondary reporting)</span>
-        </div>
-      </header>
-
-      <section class="section">
-        <h2>Reporting structure</h2>
-        <div class="chart">
-          <div class="org-grid">
-            <div class="box acad">
-              <div class="tag">AESL India · Gurugram</div>
-              <h3>Academic Head (HQ)</h3>
-            </div>
-            <div class="box biz">
-              <div class="tag">Dubai HQ</div>
-              <h3>Business Head – GCC</h3>
-              <p>Satish Rao</p>
-            </div>
-            <div class="box acad">
-              <div class="tag">Dubai HQ</div>
-              <h3>Gulf Academic Head</h3>
-            </div>
-
-            <div class="box neutral">
-              <div class="tag">HQ support → business head</div>
-              <h3>HR &amp; Recruitment</h3>
-              <p>Hiring, visas, onboarding</p>
-            </div>
-            <div class="box biz">
-              <div class="tag">One per country · ×6</div>
-              <h3>Country Head</h3>
-            </div>
-            <div class="box biz">
-              <div class="tag">One per centre</div>
-              <h3>Centre / Branch Manager</h3>
-            </div>
-
-            <div class="box biz">
-              <div class="tag">From 150+</div>
-              <h3>Counsellors</h3>
-            </div>
-            <div class="box biz">
-              <div class="tag">Centre</div>
-              <h3>Accounts</h3>
-            </div>
-            <div class="box biz">
-              <div class="tag">From 150+</div>
-              <h3>BD Executive</h3>
-            </div>
-
-            <div class="box acad">
-              <div class="tag">One per country · ×6</div>
-              <h3>Country Academic Head</h3>
-            </div>
-            <div class="box acad">
-              <div class="tag">Set of 4 · 210–220 students</div>
-              <h3>Faculty</h3>
-            </div>
-            <div class="box ops">
-              <div class="tag">One for the Gulf</div>
-              <h3>Operations Manager</h3>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <h2>Country team</h2>
-        <p>Every country has a Country Head and a Country Academic Head above its centres. Operations Executives sit in the centres and report across to the Operations Manager.</p>
-        <div class="country">
-          <div class="ccard">
-            <span class="pill biz">Business</span>
-            <h3>Country Head</h3>
-            <p>Owns revenue, admissions targets and partner relationships. All Centre Managers in the country report here.</p>
-          </div>
-          <div class="ccard">
-            <span class="pill acad">Academic</span>
-            <h3>Country Academic Head</h3>
-            <p>Owns teaching quality and results. Faculty report here on a solid line and remain aligned to Gulf academic direction.</p>
-          </div>
-          <div class="ccard">
-            <span class="pill ops">Operations</span>
-            <h3>Operations Executive</h3>
-            <p>Sits at each centre: timetables, batch set-up, facilities and schedules. Reports to the Gulf Operations Manager.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <h2>How centre staffing grows</h2>
-        <p>Staff are added in three stages as enrolment grows. The Centre Manager starts out doing everything.</p>
-        <div class="stages">
-          <div class="stage">
-            <span class="range">Under 150 students</span>
-            <h3>Centre Manager does it all</h3>
-            <p>The Centre / Branch Manager handles BD and counselling as well as running the centre. The size is lean and hands-on.</p>
-          </div>
-          <div class="stage">
-            <span class="range">150 – 300 students</span>
-            <h3>Temporary support from India</h3>
-            <p>Counsellors and BD staff travel from India on a temporary basis to support the centre while enrolment grows.</p>
-          </div>
-          <div class="stage">
-            <span class="range">300+ students</span>
-            <h3>Dedicated hires, if needed</h3>
-            <p>A dedicated counsellor or BD executive is hired locally where the country needs one. The need is driven by scale and country rules.</p>
-          </div>
-        </div>
-        <p class="cnote"><b>Country differences:</b> UAE needs more staff and dedicated roles sooner. In Kuwait and Qatar, separate counsellor and BD roles are needed only once a centre crosses 300 students.</p>
-      </section>
-
-      <section class="section" id="centre">
-        <h2>Inside one centre</h2>
-        <p>Pick a centre type and size to see the team. Headcounts are current planning figures.</p>
-        <div class="controls">
-          <div class="ctl">
-            <span class="eyebrow">Centre type</span>
-            <div class="seg" id="typeSeg">
-              <button type="button" data-v="own" aria-pressed="true">Own centre</button>
-              <button type="button" data-v="sat" aria-pressed="false">Satellite in school</button>
-              <button type="button" data-v="sip" aria-pressed="false">School-integrated</button>
-              <button type="button" data-v="lp" aria-pressed="false">Local partner</button>
-            </div>
-          </div>
-          <div class="ctl">
-            <span class="eyebrow">Size by students</span>
-            <div class="seg" id="tierSeg">
-              <button type="button" data-v="s" aria-pressed="true">Small · &lt;150</button>
-              <button type="button" data-v="m" aria-pressed="false">Medium · 150–300</button>
-              <button type="button" data-v="l" aria-pressed="false">Large · 300+</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel">
-          <div class="tblwrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Role</th>
-                  <th>Reports to</th>
-                  <th>Count</th>
-                  <th>Employer</th>
-                </tr>
-              </thead>
-              <tbody id="rows"></tbody>
-            </table>
-          </div>
-
-          <div class="side">
-            <div class="total">
-              <small>Staff at this centre</small>
-              <b id="tot">4</b>
-              <small id="totNote">non-faculty, plus faculty</small>
-            </div>
-            <div id="status" class="status">Ready</div>
-            <ul class="notes" id="notes"></ul>
-          </div>
-        </div>
-      </section>
-
-      <section class="open">
-        <h2>Confirmed decisions</h2>
-        <ol>
-          <li>The Gulf Academic Head has a dotted line to the Business Head – GCC, giving the Business Head visibility over the Operations Manager and centre operations.</li>
-          <li>School-integrated programmes have a Programme Coordinator in place of a Centre Manager, with admissions and fee handling through the school.</li>
-          <li>One faculty set is 4 faculty. At full capacity a set can teach around 270 students, but planning is for 210–220 students so faculty have time for doubt-clearing sessions.</li>
-        </ol>
-      </section>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Aakash Educational Services · GCC Business</div>
+    <h1>Aakash GCC Organisation Structure</h1>
+    <p>One structure for every centre in every Gulf country. Three reporting lines run from each centre: business to the Business Head – GCC, academics to the Academic Head at Gurugram, and operations through the Gulf Academic Head.</p>
+    <div class="legend">
+      <span><i class="sw" style="border-color:var(--biz)"></i>Business line</span>
+      <span><i class="sw" style="border-color:var(--acad)"></i>Academic line</span>
+      <span><i class="sw" style="border-color:var(--ops)"></i>Operations line</span>
+      <span><i class="sw dot"></i>Dotted line (secondary reporting)</span>
     </div>
+  </header>
 
-    <script>
-      const CM = 'Centre / Branch Manager';
-      const CH = 'Country Head';
-      const CAH = 'Country Academic Head';
+  <section class="section">
+    <h2>Reporting structure</h2>
+    <div class="chart">
+      <svg viewBox="0 0 1180 640" role="img" aria-label="Aakash GCC organisation chart">
+        <!-- connectors: business -->
+        <path class="ln lbiz" d="M380 186 V250"/>
+        <path class="ln lbiz" d="M380 306 V370"/>
+        <path class="ln lbiz" d="M380 426 V462 M240 462 H520 M240 462 V500 M380 462 V500 M520 462 V500"/>
+        <path class="ln lbiz" d="M285 158 H200 V214"/>
+        <!-- academic -->
+        <path class="ln lacad" d="M880 76 V130"/>
+        <path class="ln lacad" d="M880 186 V222 H780 V250"/>
+        <path class="ln lacad" d="M780 306 V500"/>
+        <!-- ops -->
+        <path class="ln lops" d="M880 222 H1060 V250"/>
+        <path class="ln lops" d="M1060 306 V370"/>
+        <!-- dotted -->
+        <path class="ldot" d="M785 158 H475"/>
+        <text class="tag" x="540" y="150">visibility on operations</text>
+        <path class="ldot" d="M690 528 H600 V398 H475"/>
+        <text class="tag" x="606" y="470">day-to-day</text>
+        <path class="ldot" d="M380 556 V600 H120 V488"/>
+        <text class="tag" x="132" y="594">fees &amp; cash reporting</text>
+        <path class="ldot" d="M1060 426 V448 H540 V412 H475"/>
+        <text class="tag" x="700" y="442">centre operations support</text>
 
-      const DEFAULTS = {
-        own: {
-          s: { cm: 1, couns: 1, acc: 1, bd: 1, ops: 1, fac: '6 for 2 centres' },
-          m: { cm: 1, couns: 2, acc: 1, bd: 1, ops: 1, fac: '6' },
-          l: { cm: 1, couns: 3, acc: 2, bd: 2, ops: 1, fac: '12' }
-        },
-        sat: {
-          s: { cm: 1, couns: 1, acc: 1, bd: 1, ops: 1, fac: '6 for 2 centres' },
-          m: { cm: 1, couns: 2, acc: 1, bd: 1, ops: 1, fac: '6' },
-          l: { cm: 1, couns: 3, acc: 2, bd: 2, ops: 1, fac: '12' }
-        },
-        sip: {
-          s: { coord: 1, ops: 0, fac: '6 for 2 centres' },
-          m: { coord: 1, ops: 0, fac: '6' },
-          l: { coord: 2, ops: 0, fac: '12' }
-        },
-        lp: {
-          s: { cm: 1, couns: 1, acc: 1, bd: 1, ops: 1, fac: '6 for 2 centres' },
-          m: { cm: 1, couns: 2, acc: 1, bd: 1, ops: 1, fac: '6' },
-          l: { cm: 1, couns: 3, acc: 2, bd: 2, ops: 1, fac: '12' }
-        }
-      };
+        <!-- AESL India -->
+        <rect class="box acad facad" x="770" y="20" width="220" height="56" rx="8"/>
+        <text class="k" x="784" y="38">AESL INDIA · GURUGRAM</text>
+        <text class="t" x="784" y="60">Academic Head (HQ)</text>
 
-      const META = {
-        own: {
-          emp: 'Aakash entity',
-          notes: ['Aakash leases and runs its own premises.', 'One faculty set of 4 covers 210–220 students; add a second set beyond that.']
-        },
-        sat: {
-          emp: 'Aakash entity',
-          notes: ['Runs in school premises under a rent or space agreement.', 'Large satellites usually outgrow school space; plan a move to an own centre at that stage.']
-        },
-        sip: {
-          emp: 'Aakash entity',
-          notes: ['Delivered inside the school timetable.', 'Admissions and fee collection go through the school; the nearest centre’s accounts person reconciles.', 'The Country Head retains overall business accountability for the school-integrated delivery model.']
-        },
-        lp: {
-          emp: 'Partner payroll',
-          notes: ['Bridge model for about 2 years until Aakash’s own entity is formed.', 'Partner is the legal face: payroll, visas, lease, fee account, VAT and compliance.', 'Aakash keeps operational control while the partner handles compliance and local employment.']
-        }
-      };
+        <!-- Business Head -->
+        <rect class="box biz fbiz" x="285" y="130" width="190" height="56" rx="8"/>
+        <text class="k" x="299" y="148">DUBAI HQ</text>
+        <text class="t" x="299" y="170">Business Head – GCC</text>
+        <text class="s" x="299" y="200">Satish Rao</text>
 
-      const data = {
-        own: {
-          s: { cm: 1, couns: 0, acc: 1, bd: 0, ops: 1, fac: '4 for 1 centre' },
-          m: { cm: 1, couns: 1, acc: 1, bd: 0, ops: 1, fac: '4–6' },
-          l: { cm: 1, couns: 2, acc: 1, bd: 1, ops: 1, fac: '8–10' }
-        },
-        sat: {
-          s: { cm: 1, couns: 0, acc: 1, bd: 0, ops: 1, fac: '4 for 1 centre' },
-          m: { cm: 1, couns: 1, acc: 1, bd: 0, ops: 1, fac: '4–6' },
-          l: { cm: 1, couns: 2, acc: 1, bd: 1, ops: 1, fac: '8–10' }
-        },
-        sip: {
-          s: { coord: 1, ops: 0, fac: '4 for 1 centre' },
-          m: { coord: 1, ops: 0, fac: '4–6' },
-          l: { coord: 2, ops: 0, fac: '8–10' }
-        },
-        lp: {
-          s: { cm: 1, couns: 0, acc: 1, bd: 0, ops: 1, fac: '4 for 1 centre' },
-          m: { cm: 1, couns: 1, acc: 1, bd: 0, ops: 1, fac: '4–6' },
-          l: { cm: 1, couns: 2, acc: 1, bd: 1, ops: 1, fac: '8–10' }
-        }
-      };
+        <!-- Gulf Academic Head -->
+        <rect class="box acad facad" x="785" y="130" width="190" height="56" rx="8"/>
+        <text class="k" x="799" y="148">DUBAI HQ</text>
+        <text class="t" x="799" y="170">Gulf Academic Head</text>
 
-      let type = 'own';
-      let tier = 's';
-      let draft = null;
+        <!-- HQ support group -->
+        <rect class="box neutral" x="20" y="214" width="200" height="274" rx="10" style="fill:transparent;stroke-dasharray:0"/>
+        <text class="k" x="34" y="236">HQ SUPPORT → BUSINESS HEAD</text>
+        <rect class="box biz" x="34" y="248" width="172" height="48" rx="6"/>
+        <text class="t" x="46" y="268">HR &amp; Recruitment</text><text class="s" x="46" y="285">Hiring, visas, onboarding</text>
+        <rect class="box biz" x="34" y="304" width="172" height="48" rx="6"/>
+        <text class="t" x="46" y="324">Marketing</text><text class="s" x="46" y="341">Deployed in peak season</text>
+        <rect class="box biz" x="34" y="360" width="172" height="48" rx="6"/>
+        <text class="t" x="46" y="380">Telecalling team</text><text class="s" x="46" y="397">India-based, books walk-ins</text>
+        <rect class="box biz" x="34" y="416" width="172" height="56" rx="6"/>
+        <text class="t" x="46" y="436">Finance Controller</text><text class="s" x="46" y="453">Dotted to AESL Finance,</text><text class="s" x="46" y="466">India</text>
 
-      const $ = (id) => document.getElementById(id);
-      const FACNOTE = '1 set = 4 faculty, planned for 210–220 students (about 270 at full capacity)';
-      const STAGE = {
-        s: 'Done by the Centre Manager below 150 students',
-        m: 'Temporary staff travelling from India',
-        l: 'Dedicated local hire, if the country needs it'
-      };
+        <!-- Country Head -->
+        <rect class="box biz" x="285" y="250" width="190" height="56" rx="8"/>
+        <text class="k" x="299" y="268">ONE PER COUNTRY · ×6</text>
+        <text class="t" x="299" y="290">Country Head</text>
 
-      function getCurrentData() {
-        const source = draft || data;
-        return source[type][tier];
-      }
+        <!-- Centre Manager -->
+        <rect class="box biz" x="285" y="370" width="190" height="56" rx="8"/>
+        <text class="k" x="299" y="388">ONE PER CENTRE</text>
+        <text class="t" x="299" y="410">Centre / Branch Manager</text>
 
-      function withDefaults() {
-        const value = getCurrentData();
-        const defaults = DEFAULTS[type][tier];
-        const merged = { ...defaults, ...value };
-        return merged;
-      }
+        <!-- centre staff -->
+        <rect class="box biz" x="185" y="500" width="110" height="56" rx="8"/>
+        <text class="k" x="197" y="518">FROM 150+</text><text class="t" x="197" y="540">Counsellors</text>
+        <rect class="box biz" x="325" y="500" width="110" height="56" rx="8"/>
+        <text class="k" x="337" y="518">CENTRE</text><text class="t" x="337" y="540">Accounts</text>
+        <rect class="box biz" x="465" y="500" width="110" height="56" rx="8"/>
+        <text class="k" x="477" y="518">FROM 150+</text><text class="t" x="477" y="540">BD Executive</text>
 
-      function rowDefs() {
-        if (type === 'sip') {
-          return [
-            ['Programme Coordinator', 'Nearest ' + CM + ' · ' + CH, 'coord', 'biz', META[type].emp],
-            ['Operations Executive', 'Operations Manager · dotted to Programme Coordinator', 'ops', 'ops', META[type].emp],
-            ['Faculty', CAH, 'fac', 'acad', META[type].emp, FACNOTE]
-          ];
-        }
+        <!-- Country Academic Head -->
+        <rect class="box acad" x="685" y="250" width="190" height="56" rx="8"/>
+        <text class="k" x="699" y="268">ONE PER COUNTRY · ×6</text>
+        <text class="t" x="699" y="290">Country Academic Head</text>
 
-        return [
-          [CM, CH, 'cm', 'biz', META[type].emp, tier === 's' ? 'Also does BD and counselling at this stage' : ''],
-          ['Counsellors', CM, 'couns', 'biz', META[type].emp, STAGE[tier]],
-          ['Accounts', CM + ' · dotted to Finance Controller', 'acc', 'biz', META[type].emp],
-          ['BD Executive', CM, 'bd', 'biz', META[type].emp, STAGE[tier]],
-          ['Operations Executive', 'Operations Manager · dotted to ' + CM, 'ops', 'ops', META[type].emp],
-          ['Faculty', CAH + ' · dotted to ' + CM, 'fac', 'acad', META[type].emp, FACNOTE]
-        ];
-      }
+        <!-- Faculty -->
+        <rect class="box acad" x="690" y="500" width="180" height="56" rx="8"/>
+        <text class="k" x="702" y="518">SET OF 4 · 210–220 STUDENTS</text>
+        <text class="t" x="702" y="540">Faculty</text>
 
-      function esc(value) {
-        return String(value).replace(/[&<>\"]/g, (char) => ({
-          '&': '&amp;',
-          '<': '&lt;',
-          '>': '&gt;',
-          '\"': '&quot;'
-        }[char]));
-      }
+        <!-- Ops -->
+        <rect class="box ops fops" x="965" y="250" width="190" height="56" rx="8"/>
+        <text class="k" x="979" y="268">ONE FOR THE GULF</text>
+        <text class="t" x="979" y="290">Operations Manager</text>
+        <rect class="box ops" x="965" y="370" width="190" height="56" rx="8"/>
+        <text class="k" x="979" y="388">ONE PER CENTRE</text>
+        <text class="t" x="979" y="410">Operations Executives</text>
+      </svg>
+    </div>
+  </section>
 
-      function render() {
-        const current = withDefaults();
-        const rows = rowDefs();
-        $('rows').innerHTML = rows.map((row) => {
-          const key = row[2];
-          const label = row[3] === 'acad' ? 'Academic' : row[3] === 'ops' ? 'Operations' : 'Business';
-          const value = current[key];
-          const cell = draft
-            ? (key === 'fac'
-              ? `<input class="wide" id="in-${key}" data-k="${key}" type="text" value="${esc(value)}" aria-label="${row[0]} count">`
-              : `<input id="in-${key}" data-k="${key}" type="number" min="0" step="1" value="${esc(value)}" aria-label="${row[0]} count">`)
-            : esc(value);
+  <section class="section">
+    <h2>Country team</h2>
+    <p>Every country has a Country Head and a Country Academic Head above its centres. Operations Executives sit in the centres and report across to the Operations Manager.</p>
+    <div class="country">
+      <div class="ccard"><span class="pill biz">Business</span><h3>Country Head</h3><p>Owns revenue, admissions targets and partner relationships. All Centre Managers in the country report here. Reports to the Business Head – GCC.</p></div>
+      <div class="ccard"><span class="pill acad">Academic</span><h3>Country Academic Head</h3><p>Owns teaching quality and results. Faculty report here on a solid line. Reports to the Gulf Academic Head.</p></div>
+      <div class="ccard"><span class="pill ops">Operations</span><h3>Operations Executive</h3><p>Sits at each centre: timetables, batch set-up, facilities, schedules. Reports to the Gulf Operations Manager, dotted to the Centre Manager.</p></div>
+    </div>
+  </section>
 
-          return `<tr><td><span class="pill ${row[3]}">${label}</span><br>${row[0]}${row[5] ? ` <span class="rnote">${row[5]}</span>` : ''}</td><td>${row[1]}</td><td class="n">${cell}</td><td>${row[4]}</td></tr>`;
-        }).join('');
+  <section class="section">
+    <h2>How centre staffing grows</h2>
+    <p>Staff are added in three stages as enrolment grows. The Centre Manager starts out doing everything.</p>
+    <div class="stages">
+      <div class="stage"><span class="range">Under 150 students</span><h3>Centre Manager does it all</h3><p>The Centre / Branch Manager handles BD and counselling as well as running the centre. One person does all the start-up work, then moves on to managing the centre.</p></div>
+      <div class="stage"><span class="range">150 – 300 students</span><h3>Temporary support from India</h3><p>Counsellors and BD staff travel from India on a temporary basis to support the Centre Manager through admissions.</p></div>
+      <div class="stage"><span class="range">300+ students</span><h3>Dedicated hires, if needed</h3><p>A dedicated counsellor or BD executive is hired locally where the country needs one. The need varies by country.</p></div>
+    </div>
+    <p class="cnote"><b>Country differences:</b> UAE needs more staff and dedicated roles sooner. In Kuwait and Qatar, separate counsellor and BD roles are needed only once a centre crosses 300 students.</p>
+  </section>
 
-        const staff = rows.filter((row) => row[2] !== 'fac').reduce((total, row) => total + (Number(current[row[2]]) || 0), 0);
-        $('tot').textContent = String(staff);
-        $('totNote').textContent = 'non-faculty, plus ' + current.fac + ' faculty';
-        $('notes').innerHTML = META[type].notes.map((note) => `<li>${note}</li>`).join('');
-      }
+  <section class="section" id="centre">
+    <h2>Inside one centre</h2>
+    <p>Pick a centre type and size to see the team. Headcounts are the current planning figures.</p>
+    <div class="controls">
+      <div class="ctl"><span class="eyebrow">Centre type</span>
+        <div class="seg" id="typeSeg">
+          <button id="t-own" data-v="own" aria-pressed="true">Own centre</button>
+          <button id="t-sat" data-v="sat" aria-pressed="false">Satellite in school</button>
+          <button id="t-sip" data-v="sip" aria-pressed="false">School-integrated</button>
+          <button id="t-lp" data-v="lp" aria-pressed="false">Local partner</button>
+        </div></div>
+      <div class="ctl"><span class="eyebrow">Size by students</span>
+        <div class="seg" id="tierSeg">
+          <button id="s-s" data-v="s" aria-pressed="true">Small · &lt;150</button>
+          <button id="s-m" data-v="m" aria-pressed="false">Medium · 150–300</button>
+          <button id="s-l" data-v="l" aria-pressed="false">Large · 300+</button>
+        </div></div>
+    </div>
+    <div class="panel">
+      <div class="tblwrap"><table>
+        <thead><tr><th>Role</th><th>Reports to</th><th>Count</th><th>Employer</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table></div>
+      <div class="side">
+        <div class="total"><small>Staff at this centre</small><b id="tot">4</b><small id="totNote">plus faculty</small></div>
+        <ul class="notes" id="notes"></ul>
+      </div>
+    </div>
+  </section>
 
-      document.addEventListener('input', (event) => {
-        const input = event.target;
-        if (!input || !input.dataset || !input.dataset.k || !draft) return;
+  <section class="open">
+    <h2>Confirmed decisions</h2>
+    <ol>
+      <li>The Gulf Academic Head has a dotted line to the Business Head – GCC, giving the Business Head visibility over the Operations Manager and centre operations.</li>
+      <li>School-integrated programmes have a Programme Coordinator in place of a Centre Manager, with admissions and fees handled by the school.</li>
+      <li>One faculty set is 4 faculty. At full capacity a set can teach about 270 students, but it is planned for 210–220 students so faculty have time for doubt-clearing sessions.</li>
+    </ol>
+  </section>
+</div>
 
-        const key = input.dataset.k;
-        if (key === 'fac') {
-          draft[type][tier][key] = input.value;
-        } else {
-          draft[type][tier][key] = Math.max(0, parseInt(input.value, 10) || 0);
-        }
+<script>
+const CM="Centre / Branch Manager", CH="Country Head", CAH="Country Academic Head";
+const DEFAULTS={
+ own:{s:{cm:1,couns:1,acc:1,bd:1,ops:1,fac:"6 for 2 centres"},m:{cm:1,couns:2,acc:1,bd:1,ops:1,fac:"6"},l:{cm:1,couns:3,acc:2,bd:2,ops:1,fac:"12"}},
+ sat:{s:{cm:1,couns:1,acc:1,bd:1,ops:1,fac:"6 for 2 centres"},m:{cm:1,couns:2,acc:1,bd:1,ops:1,fac:"6"},l:{cm:1,couns:3,acc:2,bd:2,ops:1,fac:"12"}},
+ sip:{s:{coord:1,ops:0,fac:"6 for 2 centres"},m:{coord:1,ops:0,fac:"6"},l:{coord:2,ops:0,fac:"12"}},
+ lp:{s:{cm:1,couns:1,acc:1,bd:1,ops:1,fac:"6 for 2 centres"},m:{cm:1,couns:2,acc:1,bd:1,ops:1,fac:"6"},l:{cm:1,couns:3,acc:2,bd:2,ops:1,fac:"12"}}
+};
+const META={
+  own:{emp:"Aakash entity",notes:["Aakash leases and runs its own premises.","One faculty set of 4 covers 210–220 students; add a second set beyond that."]},
+  sat:{emp:"Aakash entity",notes:["Runs in school premises under a rent or space agreement.","Large satellites usually outgrow school space; plan a move to an own centre at that stage."]},
+  sip:{emp:"Aakash entity",notes:["Delivered inside the school timetable.","Admissions and fee collection go through the school; the nearest centre's accounts person reconciles.","The Country Head owns the school relationship."]},
+  lp:{emp:"Partner payroll",notes:["Bridge model for about 2 years until Aakash's own entity is formed.","Partner is the legal face: payroll, visas, lease, fee account, VAT and compliance.","Reporting lines stay with Aakash; partner keeps its agreed revenue share."]}
+};
+let data={"own":{"s":{"cm":1,"couns":0,"acc":1,"bd":0,"ops":1,"fac":"4 for 1 centres"},"m":{"cm":1,"couns":1,"acc":1,"bd":0,"ops":1,"fac":"4-6"},"l":{"cm":1,"couns":2,"acc":1,"bd":1,"ops":1,"fac":"7-8"}},"sat":{"s":{"cm":1,"couns":0,"acc":1,"bd":0,"ops":1,"fac":"4 for 1 centre"},"m":{"cm":1,"couns":1,"acc":1,"bd":0,"ops":1,"fac":"4-6"},"l":{"cm":1,"couns":2,"acc":1,"bd":1,"ops":1,"fac":"7-8"}},"sip":{"s":{"coord":1,"ops":1,"fac":"4 for 1 centre"},"m":{"coord":1,"ops":1,"fac":"6"},"l":{"coord":2,"ops":1,"fac":"7-8"}},"lp":{"s":{"cm":1,"couns":0,"acc":1,"bd":0,"ops":1,"fac":"4 for 1 centre"},"m":{"cm":1,"couns":2,"acc":1,"bd":0,"ops":1,"fac":"4-6"},"l":{"cm":1,"couns":1,"acc":1,"bd":1,"ops":1,"fac":"7-8"}}}, draft=null, type="own", tier="s", art=null, canSave=true;
+const $=id=>document.getElementById(id);
+const FACNOTE="1 set = 4 faculty, planned for 210–220 students (about 270 at full capacity)";
+const STAGE={s:"Done by the Centre Manager below 150 students",m:"Temporary staff travelling from India",l:"Dedicated local hire, if the country needs it"};
+const cur=()=>(draft||data)[type][tier];
+function withDefaults(){const v=cur();for(const k in DEFAULTS[type][tier]) if(v[k]===undefined) v[k]=DEFAULTS[type][tier][k];return v;}
 
-        const current = getCurrentData();
-        const rows = rowDefs();
-        const staff = rows.filter((row) => row[2] !== 'fac').reduce((total, row) => total + (Number(current[row[2]]) || 0), 0);
-        $('tot').textContent = String(staff);
-        $('totNote').textContent = 'non-faculty, plus ' + current.fac + ' faculty';
-        $('status').textContent = 'Unsaved changes';
-      });
+function rowsFor(){
+  const v=cur(), emp=META[type].emp;
+  if(type==="sip") return [
+    ["Programme Coordinator","Nearest "+CM+" · "+CH,"coord","biz",emp],
+    ["Operations Executive","Operations Manager · dotted to Programme Coordinator","ops","ops",emp],
+    ["Faculty",CAH,"fac","acad",emp,FACNOTE]];
+  return [
+    [CM,CH,"cm","biz",emp,tier==="s"?"Also does BD and counselling at this stage":""],
+    ["Counsellors",CM,"couns","biz",emp,STAGE[tier]],
+    ["Accounts",CM+" · dotted to Finance Controller","acc","biz",emp],
+    ["BD Executive",CM,"bd","biz",emp,STAGE[tier]],
+    ["Operations Executive","Operations Manager · dotted to "+CM,"ops","ops",emp],["Faculty",CAH+" · dotted to "+CM,"fac","acad",emp,FACNOTE]];
+}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function render(){
+  const v=withDefaults(), r=rowsFor();
+  $("rows").innerHTML=r.map(x=>{
+    const val=v[x[2]], label=x[3]==="acad"?"Academic":x[3]==="prop"?"Proposed":x[3]==="ops"?"Operations":"Business";
+    const cell=draft
+      ? (x[2]==="fac"
+          ? `<input class="wide" id="in-${x[2]}" data-k="${x[2]}" type="text" value="${esc(val)}" aria-label="${x[0]} count">`
+          : `<input id="in-${x[2]}" data-k="${x[2]}" type="number" min="0" step="1" value="${esc(val)}" aria-label="${x[0]} count">`)
+      : esc(val);
+    return `<tr><td><span class="pill ${x[3]}">${label}</span><br>${x[0]}${x[5]?`<span class="rnote">${x[5]}</span>`:""}</td><td>${x[1]}</td><td class="n">${cell}</td><td>${x[4]}</td></tr>`;
+  }).join("");
+  const staff=r.filter(x=>x[2]!=="fac").reduce((s,x)=>s+(Number(v[x[2]])||0),0);
+  $("tot").textContent=staff;
+  $("totNote").textContent="non-faculty, plus "+v.fac+" faculty";
+  $("notes").innerHTML=META[type].notes.map(n=>`<li>${n}</li>`).join("");
+  document.querySelector("#centre").classList.toggle("editing",!!draft);
+}
+document.addEventListener("input",e=>{
+  const k=e.target.dataset&&e.target.dataset.k; if(!k||!draft) return;
+  draft[type][tier][k]= k==="fac" ? e.target.value : Math.max(0,parseInt(e.target.value,10)||0);
+  const v=cur(), r=rowsFor();
+  $("tot").textContent=r.filter(x=>x[2]!=="fac").reduce((s,x)=>s+(Number(v[x[2]])||0),0);
+  $("totNote").textContent="non-faculty, plus "+v.fac+" faculty";
+  $("status").textContent="Unsaved changes";
+});
+function bind(id,set){document.querySelectorAll("#"+id+" button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll("#"+id+" button").forEach(x=>x.setAttribute("aria-pressed",x===b));set(b.dataset.v);render();}));}
+bind("typeSeg",v=>type=v);bind("tierSeg",v=>tier=v);
 
-      function bindSegment(id, setter) {
-        document.querySelectorAll('#' + id + ' button').forEach((button) => {
-          button.addEventListener('click', () => {
-            document.querySelectorAll('#' + id + ' button').forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
-            setter(button.dataset.v);
-            render();
-          });
-        });
-      }
+render();
+</script>
 
-      bindSegment('typeSeg', (value) => {
-        type = value;
-      });
-
-      bindSegment('tierSeg', (value) => {
-        tier = value;
-      });
-
-      render();
-    </script>
-  </body>
+</body>
 </html>
