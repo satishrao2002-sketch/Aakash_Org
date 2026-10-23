@@ -36,6 +36,7 @@ header p{margin:0;max-width:68ch;color:var(--muted)}
 .sw{width:22px;height:0;border-top:3px solid}
 .sw.dot{border-top:2px dashed var(--muted)}
 .chart{overflow-x:auto;background:var(--surface);border:1px solid var(--rule);border-radius:10px}
+.chart svg[hidden]{display:none}
 .chart svg{display:block;min-width:1040px;width:100%;height:auto}
 svg .box{fill:var(--surface);stroke-width:1.6}
 svg .biz{stroke:var(--biz)} svg .acad{stroke:var(--acad)} svg .ops{stroke:var(--ops)} svg .neutral{stroke:var(--rule)}
@@ -95,6 +96,7 @@ td.n input.wide{width:16ch}
 .cnote{background:var(--soft-biz);border-radius:10px;padding:12px 16px;font-size:14px;max-width:none}
 .cnote b{color:var(--biz)}
 .rnote{display:block;font-size:12.5px;color:var(--muted);margin-top:2px}
+.phasenote{margin:0;max-width:72ch;color:var(--muted)}
 .open{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:16px 20px}
 .open ol{margin:8px 0 0;padding-left:20px;display:grid;gap:8px;font-size:14px;max-width:80ch}
 </style>
@@ -105,7 +107,7 @@ td.n input.wide{width:16ch}
   <header>
     <div class="eyebrow">Aakash Educational Services · GCC Business</div>
     <h1>Aakash GCC Organisation Structure</h1>
-    <p>One structure for every centre in every Gulf country. Three reporting lines run from each centre: business to the Business Head – GCC, academics to the Academic Head at Gurugram, and operations through the Gulf Academic Head.</p>
+    <p>One structure for every centre in every Gulf country, built lean first. At the start, Centre Managers and the Gulf Academic Head report directly to the Business Head – GCC. Country Heads are added as each country grows past 6 centres.</p>
     <div class="legend">
       <span><i class="sw" style="border-color:var(--biz)"></i>Business line</span>
       <span><i class="sw" style="border-color:var(--acad)"></i>Academic line</span>
@@ -116,103 +118,59 @@ td.n input.wide{width:16ch}
 
   <section class="section">
     <h2>Reporting structure</h2>
+    <div class="ctl"><span class="eyebrow">Stage of growth</span>
+      <div class="seg" id="phaseSeg">
+        <button id="ph-1" data-v="1" aria-pressed="true">Phase 1 · Lean start</button>
+        <button id="ph-2" data-v="2" aria-pressed="false">Phase 2 · 6+ centres in a country</button>
+      </div></div>
+    <p class="phasenote" id="pn1">Starting structure. Every Centre Manager reports directly to the Business Head – GCC, and so does the Gulf Academic Head. Faculty and operations sit under the Gulf Academic Head.</p>
+    <p class="phasenote" id="pn2" hidden>Once a country has 6 active centres, a Country Head is deployed there, one for every 7–8 centres. That country's Centre Managers then report to the Country Head. Countries below 6 centres stay on the Phase 1 lines.</p>
     <div class="chart">
-      <svg viewBox="0 0 1180 640" role="img" aria-label="Aakash GCC organisation chart">
-        <!-- connectors: business -->
-        <path class="ln lbiz" d="M380 186 V250"/>
-        <path class="ln lbiz" d="M380 306 V370"/>
-        <path class="ln lbiz" d="M380 426 V462 M240 462 H520 M240 462 V500 M380 462 V500 M520 462 V500"/>
-        <path class="ln lbiz" d="M285 158 H200 V214"/>
-        <!-- academic -->
-        <path class="ln lacad" d="M880 76 V130"/>
-        <path class="ln lacad" d="M880 186 V222 H780 V250"/>
-        <path class="ln lacad" d="M780 306 V500"/>
-        <!-- ops -->
-        <path class="ln lops" d="M880 222 H1060 V250"/>
-        <path class="ln lops" d="M1060 306 V370"/>
-        <!-- dotted -->
-        <path class="ldot" d="M785 158 H475"/>
-        <text class="tag" x="540" y="150">visibility on operations</text>
-        <path class="ldot" d="M690 528 H600 V398 H475"/>
-        <text class="tag" x="606" y="470">day-to-day</text>
-        <path class="ldot" d="M380 556 V600 H120 V488"/>
-        <text class="tag" x="132" y="594">fees &amp; cash reporting</text>
-        <path class="ldot" d="M1060 426 V448 H540 V412 H475"/>
-        <text class="tag" x="700" y="442">centre operations support</text>
-
-        <!-- AESL India -->
-        <rect class="box acad facad" x="770" y="20" width="220" height="56" rx="8"/>
-        <text class="k" x="784" y="38">AESL INDIA · GURUGRAM</text>
-        <text class="t" x="784" y="60">Academic Head (HQ)</text>
-
-        <!-- Business Head -->
-        <rect class="box biz fbiz" x="285" y="130" width="190" height="56" rx="8"/>
-        <text class="k" x="299" y="148">DUBAI HQ</text>
-        <text class="t" x="299" y="170">Business Head – GCC</text>
-        <text class="s" x="299" y="200">Satish Rao</text>
-
-        <!-- Gulf Academic Head -->
-        <rect class="box acad facad" x="785" y="130" width="190" height="56" rx="8"/>
-        <text class="k" x="799" y="148">DUBAI HQ</text>
-        <text class="t" x="799" y="170">Gulf Academic Head</text>
-
-        <!-- HQ support group -->
-        <rect class="box neutral" x="20" y="214" width="200" height="274" rx="10" style="fill:transparent;stroke-dasharray:0"/>
-        <text class="k" x="34" y="236">HQ SUPPORT → BUSINESS HEAD</text>
-        <rect class="box biz" x="34" y="248" width="172" height="48" rx="6"/>
-        <text class="t" x="46" y="268">HR &amp; Recruitment</text><text class="s" x="46" y="285">Hiring, visas, onboarding</text>
-        <rect class="box biz" x="34" y="304" width="172" height="48" rx="6"/>
-        <text class="t" x="46" y="324">Marketing</text><text class="s" x="46" y="341">Deployed in peak season</text>
-        <rect class="box biz" x="34" y="360" width="172" height="48" rx="6"/>
-        <text class="t" x="46" y="380">Telecalling team</text><text class="s" x="46" y="397">India-based, books walk-ins</text>
-        <rect class="box biz" x="34" y="416" width="172" height="56" rx="6"/>
-        <text class="t" x="46" y="436">Finance Controller</text><text class="s" x="46" y="453">Dotted to AESL Finance,</text><text class="s" x="46" y="466">India</text>
-
-        <!-- Country Head -->
-        <rect class="box biz" x="285" y="250" width="190" height="56" rx="8"/>
-        <text class="k" x="299" y="268">ONE PER COUNTRY · ×6</text>
-        <text class="t" x="299" y="290">Country Head</text>
-
-        <!-- Centre Manager -->
-        <rect class="box biz" x="285" y="370" width="190" height="56" rx="8"/>
-        <text class="k" x="299" y="388">ONE PER CENTRE</text>
-        <text class="t" x="299" y="410">Centre / Branch Manager</text>
-
-        <!-- centre staff -->
-        <rect class="box biz" x="185" y="500" width="110" height="56" rx="8"/>
-        <text class="k" x="197" y="518">FROM 150+</text><text class="t" x="197" y="540">Counsellors</text>
-        <rect class="box biz" x="325" y="500" width="110" height="56" rx="8"/>
-        <text class="k" x="337" y="518">CENTRE</text><text class="t" x="337" y="540">Accounts</text>
-        <rect class="box biz" x="465" y="500" width="110" height="56" rx="8"/>
-        <text class="k" x="477" y="518">FROM 150+</text><text class="t" x="477" y="540">BD Executive</text>
-
-        <!-- Country Academic Head -->
-        <rect class="box acad" x="685" y="250" width="190" height="56" rx="8"/>
-        <text class="k" x="699" y="268">ONE PER COUNTRY · ×6</text>
-        <text class="t" x="699" y="290">Country Academic Head</text>
-
-        <!-- Faculty -->
-        <rect class="box acad" x="690" y="500" width="180" height="56" rx="8"/>
-        <text class="k" x="702" y="518">SET OF 4 · 210–220 STUDENTS</text>
-        <text class="t" x="702" y="540">Faculty</text>
-
-        <!-- Ops -->
-        <rect class="box ops fops" x="965" y="250" width="190" height="56" rx="8"/>
-        <text class="k" x="979" y="268">ONE FOR THE GULF</text>
-        <text class="t" x="979" y="290">Operations Manager</text>
-        <rect class="box ops" x="965" y="370" width="190" height="56" rx="8"/>
-        <text class="k" x="979" y="388">ONE PER CENTRE</text>
-        <text class="t" x="979" y="410">Operations Executives</text>
-      </svg>
+<svg id="chart1" viewBox="0 0 1200 480" role="img" aria-label="Phase 1 lean structure: Centre Managers and Gulf Academic Head report to the Business Head">
+<rect class="box biz fbiz" x="495" y="30" width="210" height="66" rx="8"/><text class="k" x="509" y="48">DUBAI HQ</text><text class="t" x="509" y="70">Business Head – GCC</text><text class="s" x="509" y="88">Satish Rao</text><rect class="box acad facad" x="960" y="20" width="220" height="56" rx="8"/><text class="k" x="974" y="38">AESL INDIA · GURUGRAM</text><text class="t" x="974" y="60">Academic Head (HQ)</text><rect class="box acad facad" x="760" y="150" width="190" height="56" rx="8"/><text class="k" x="774" y="168">DUBAI HQ</text><text class="t" x="774" y="190">Gulf Academic Head</text><path class="ldot" d="M1070 76 V178 H950"/><text class="tag" x="962" y="171">curriculum &amp; content</text><path class="ln lbiz" d="M600 96 V122 M110 122 H855 M110 122 V150 M485 122 V150"/><path class="ln lacad" d="M855 122 V150"/><rect class="box neutral" x="20" y="150" width="180" height="272" rx="10" style="fill:transparent"/>
+<text class="k" x="32" y="172">HQ SUPPORT</text>
+<rect class="box biz" x="32" y="184" width="156" height="48" rx="6"/><text class="t" x="44" y="204">HR &amp; Recruitment</text><text class="s" x="44" y="221">Hiring, visas, onboarding</text>
+<rect class="box biz" x="32" y="240" width="156" height="48" rx="6"/><text class="t" x="44" y="260">Marketing</text><text class="s" x="44" y="277">Deployed in peak season</text>
+<rect class="box biz" x="32" y="296" width="156" height="48" rx="6"/><text class="t" x="44" y="316">Telecalling team</text><text class="s" x="44" y="333">Walk-ins, from India</text>
+<rect class="box biz" x="32" y="352" width="156" height="58" rx="6"/><text class="t" x="44" y="372">Finance Controller</text><text class="s" x="44" y="389">Dotted to AESL Finance,</text><text class="s" x="44" y="403">India</text>
+<rect class="box biz " x="380" y="150" width="210" height="56" rx="8"/><text class="k" x="394" y="168">ONE PER CENTRE</text><text class="t" x="394" y="190">Centre / Branch Manager</text>
+<path class="ln lbiz" d="M485 206 V248 M305 248 H665 M305 248 V290 M485 248 V290 M665 248 V290"/>
+<rect class="box biz " x="250" y="290" width="110" height="56" rx="8"/><text class="k" x="264" y="308">FROM 150+</text><text class="t" x="264" y="330">Counsellors</text><rect class="box biz " x="430" y="290" width="110" height="56" rx="8"/><text class="k" x="444" y="308">CENTRE</text><text class="t" x="444" y="330">Accounts</text><rect class="box biz " x="610" y="290" width="110" height="56" rx="8"/><text class="k" x="624" y="308">FROM 150+</text><text class="t" x="624" y="330">BD Executive</text>
+<path class="ln lacad" d="M855 206 V248 H835 V290"/><path class="ln lops" d="M855 248 H1045 V290 M1045 346 V390"/>
+<rect class="box acad " x="740" y="290" width="190" height="56" rx="8"/><text class="k" x="754" y="308">PER 210–220 STUDENTS</text><text class="t" x="754" y="330">Faculty set of 4</text>
+<rect class="box ops fops" x="950" y="290" width="190" height="56" rx="8"/><text class="k" x="964" y="308">ONE FOR THE GULF</text><text class="t" x="964" y="330">Operations Manager</text>
+<rect class="box ops " x="950" y="390" width="190" height="56" rx="8"/><text class="k" x="964" y="408">ONE PER CENTRE</text><text class="t" x="964" y="430">Operations Executives</text>
+<path class="ldot" d="M740 318 H728 V178 H590"/><text class="tag" x="600" y="171">day-to-day</text>
+</svg>
+<svg id="chart2" viewBox="0 0 1200 480" role="img" aria-label="Phase 2 scaled structure: Country Heads deployed once a country has 6 or more centres" hidden>
+<rect class="box biz fbiz" x="495" y="30" width="210" height="66" rx="8"/><text class="k" x="509" y="48">DUBAI HQ</text><text class="t" x="509" y="70">Business Head – GCC</text><text class="s" x="509" y="88">Satish Rao</text><rect class="box acad facad" x="960" y="20" width="220" height="56" rx="8"/><text class="k" x="974" y="38">AESL INDIA · GURUGRAM</text><text class="t" x="974" y="60">Academic Head (HQ)</text><rect class="box acad facad" x="760" y="150" width="190" height="56" rx="8"/><text class="k" x="774" y="168">DUBAI HQ</text><text class="t" x="774" y="190">Gulf Academic Head</text><path class="ldot" d="M1070 76 V178 H950"/><text class="tag" x="962" y="171">curriculum &amp; content</text><path class="ln lbiz" d="M600 96 V122 M110 122 H855 M110 122 V150 M485 122 V150"/><path class="ln lacad" d="M855 122 V150"/><rect class="box neutral" x="20" y="150" width="180" height="272" rx="10" style="fill:transparent"/>
+<text class="k" x="32" y="172">HQ SUPPORT</text>
+<rect class="box biz" x="32" y="184" width="156" height="48" rx="6"/><text class="t" x="44" y="204">HR &amp; Recruitment</text><text class="s" x="44" y="221">Hiring, visas, onboarding</text>
+<rect class="box biz" x="32" y="240" width="156" height="48" rx="6"/><text class="t" x="44" y="260">Marketing</text><text class="s" x="44" y="277">Deployed in peak season</text>
+<rect class="box biz" x="32" y="296" width="156" height="48" rx="6"/><text class="t" x="44" y="316">Telecalling team</text><text class="s" x="44" y="333">Walk-ins, from India</text>
+<rect class="box biz" x="32" y="352" width="156" height="58" rx="6"/><text class="t" x="44" y="372">Finance Controller</text><text class="s" x="44" y="389">Dotted to AESL Finance,</text><text class="s" x="44" y="403">India</text>
+<rect class="box biz " x="380" y="150" width="210" height="70" rx="8"/><text class="k" x="394" y="168">DEPLOYED AT 6+ CENTRES</text><text class="t" x="394" y="190">Country Head</text><text class="s" x="394" y="208">One per 7–8 centres</text>
+<path class="ln lbiz" d="M485 220 V260"/>
+<rect class="box biz " x="380" y="260" width="210" height="56" rx="8"/><text class="k" x="394" y="278">ONE PER CENTRE</text><text class="t" x="394" y="300">Centre / Branch Manager</text>
+<text class="tag" x="210" y="270">Under 6 centres: Centre</text><text class="tag" x="210" y="284">Managers report to the</text><text class="tag" x="210" y="298">Business Head directly</text>
+<path class="ln lbiz" d="M485 316 V340 M305 340 H665 M305 340 V360 M485 340 V360 M665 340 V360"/>
+<rect class="box biz " x="250" y="360" width="110" height="56" rx="8"/><text class="k" x="264" y="378">FROM 150+</text><text class="t" x="264" y="400">Counsellors</text><rect class="box biz " x="430" y="360" width="110" height="56" rx="8"/><text class="k" x="444" y="378">CENTRE</text><text class="t" x="444" y="400">Accounts</text><rect class="box biz " x="610" y="360" width="110" height="56" rx="8"/><text class="k" x="624" y="378">FROM 150+</text><text class="t" x="624" y="400">BD Executive</text>
+<path class="ln lacad" d="M855 206 V240 H835 V260 M835 316 V380"/><path class="ln lops" d="M855 240 H1045 V260 M1045 316 V380"/>
+<rect class="box acad " x="740" y="260" width="190" height="56" rx="8"/><text class="k" x="754" y="278">DEPLOYED AT 6+ CENTRES</text><text class="t" x="754" y="300">Country Academic Head</text>
+<rect class="box ops fops" x="950" y="260" width="190" height="56" rx="8"/><text class="k" x="964" y="278">ONE FOR THE GULF</text><text class="t" x="964" y="300">Operations Manager</text>
+<rect class="box acad " x="740" y="380" width="190" height="56" rx="8"/><text class="k" x="754" y="398">PER 210–220 STUDENTS</text><text class="t" x="754" y="420">Faculty set of 4</text>
+<rect class="box ops " x="950" y="380" width="190" height="56" rx="8"/><text class="k" x="964" y="398">ONE PER CENTRE</text><text class="t" x="964" y="420">Operations Executives</text>
+<path class="ldot" d="M740 408 H728 V288 H590"/><text class="tag" x="600" y="281">day-to-day</text>
+</svg>
     </div>
   </section>
 
   <section class="section">
-    <h2>Country team</h2>
-    <p>Every country has a Country Head and a Country Academic Head above its centres. Operations Executives sit in the centres and report across to the Operations Manager.</p>
+    <h2>Country layer</h2>
+    <p>Country roles are added only when a country is large enough to need them. Until then, the Business Head and Gulf Academic Head cover the country directly.</p>
     <div class="country">
-      <div class="ccard"><span class="pill biz">Business</span><h3>Country Head</h3><p>Owns revenue, admissions targets and partner relationships. All Centre Managers in the country report here. Reports to the Business Head – GCC.</p></div>
-      <div class="ccard"><span class="pill acad">Academic</span><h3>Country Academic Head</h3><p>Owns teaching quality and results. Faculty report here on a solid line. Reports to the Gulf Academic Head.</p></div>
+      <div class="ccard"><span class="pill biz">Business</span><h3>Country Head</h3><p>Deployed once a country has 6 active centres, one for every 7–8 centres. Owns revenue, admissions and partner relationships, and takes over the Centre Managers in that country. Reports to the Business Head – GCC.</p></div>
+      <div class="ccard"><span class="pill acad">Academic</span><h3>Country Academic Head</h3><p>Shown as deployed at the same stage as the Country Head. Owns teaching quality and results, with faculty reporting here. Reports to the Gulf Academic Head.</p></div>
       <div class="ccard"><span class="pill ops">Operations</span><h3>Operations Executive</h3><p>Sits at each centre: timetables, batch set-up, facilities, schedules. Reports to the Gulf Operations Manager, dotted to the Centre Manager.</p></div>
     </div>
   </section>
@@ -261,15 +219,25 @@ td.n input.wide{width:16ch}
   <section class="open">
     <h2>Confirmed decisions</h2>
     <ol>
-      <li>The Gulf Academic Head has a dotted line to the Business Head – GCC, giving the Business Head visibility over the Operations Manager and centre operations.</li>
+      <li>Lean start: all Centre Managers report directly to the Business Head – GCC.</li>
+      <li>A Country Head is deployed only once a country has 6 active centres, one for every 7–8 centres.</li>
+      <li>The Gulf Academic Head reports to the Business Head – GCC, not to the Academic Head in India.</li>
       <li>School-integrated programmes have a Programme Coordinator in place of a Centre Manager, with admissions and fees handled by the school.</li>
       <li>One faculty set is 4 faculty. At full capacity a set can teach about 270 students, but it is planned for 210–220 students so faculty have time for doubt-clearing sessions.</li>
+    </ol>
+  </section>
+
+  <section class="open">
+    <h2>Points to confirm</h2>
+    <ol>
+      <li>The chart keeps a dotted line from the Gulf Academic Head to the Academic Head in India for curriculum and content. Remove it if the GCC academic team should be fully independent.</li>
+      <li>The Country Academic Head is shown arriving at the same 6+ centre stage as the Country Head. Until then, faculty report to the Gulf Academic Head.</li>
     </ol>
   </section>
 </div>
 
 <script>
-const CM="Centre / Branch Manager", CH="Country Head", CAH="Country Academic Head";
+const CM="Centre / Branch Manager", CH="Business Head – GCC (Country Head from 6+ centres)", CAH="Gulf Academic Head (Country Academic Head from 6+ centres)";
 const DEFAULTS={
  own:{s:{cm:1,couns:1,acc:1,bd:1,ops:1,fac:"6 for 2 centres"},m:{cm:1,couns:2,acc:1,bd:1,ops:1,fac:"6"},l:{cm:1,couns:3,acc:2,bd:2,ops:1,fac:"12"}},
  sat:{s:{cm:1,couns:1,acc:1,bd:1,ops:1,fac:"6 for 2 centres"},m:{cm:1,couns:2,acc:1,bd:1,ops:1,fac:"6"},l:{cm:1,couns:3,acc:2,bd:2,ops:1,fac:"12"}},
@@ -289,10 +257,11 @@ const STAGE={s:"Done by the Centre Manager below 150 students",m:"Temporary staf
 const cur=()=>(draft||data)[type][tier];
 function withDefaults(){const v=cur();for(const k in DEFAULTS[type][tier]) if(v[k]===undefined) v[k]=DEFAULTS[type][tier][k];return v;}
 
+function setPhase(v){["1","2"].forEach(n=>{$("chart"+n).toggleAttribute("hidden",n!==v);$("pn"+n).hidden=n!==v;});}
 function rowsFor(){
   const v=cur(), emp=META[type].emp;
   if(type==="sip") return [
-    ["Programme Coordinator","Nearest "+CM+" · "+CH,"coord","biz",emp],
+    ["Programme Coordinator","Nearest "+CM+" · Business Head – GCC","coord","biz",emp],
     ["Operations Executive","Operations Manager · dotted to Programme Coordinator","ops","ops",emp],
     ["Faculty",CAH,"fac","acad",emp,FACNOTE]];
   return [
@@ -330,7 +299,7 @@ document.addEventListener("input",e=>{
 });
 function bind(id,set){document.querySelectorAll("#"+id+" button").forEach(b=>b.addEventListener("click",()=>{
   document.querySelectorAll("#"+id+" button").forEach(x=>x.setAttribute("aria-pressed",x===b));set(b.dataset.v);render();}));}
-bind("typeSeg",v=>type=v);bind("tierSeg",v=>tier=v);
+bind("typeSeg",v=>type=v);bind("phaseSeg",setPhase);bind("tierSeg",v=>tier=v);
 
 render();
 </script>
